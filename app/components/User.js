@@ -2,7 +2,8 @@ import React from 'react';
 import queryString from 'query-string';
 import { fetchUser, listItems } from '../utils/api';
 import Loading from './Loading';
-export default class Post extends React.Component {
+import Post from './Post';
+export default class User extends React.Component {
   state = {
     userData: {
       about: null,
@@ -39,7 +40,37 @@ export default class Post extends React.Component {
 
   render() {
     console.log(this.state);
-
-    return <p>selam</p>;
+    const { userData, userPosts } = this.state;
+    return (
+      <ul>
+        {userData === null && userPosts === null ? (
+          <Loading />
+        ) : (
+          <div>
+            <p dangerouslySetInnerHTML={{ __html: userData.about }} />
+            <p>{userData.created}</p>
+            <p>{userData.id}</p>
+            <p>{userData.karma}</p>
+          </div>
+        )}
+        {userPosts !== null &&
+          userPosts.map((story) => {
+            const miliseconds = story.time * 1000;
+            const dateObj = new Date(miliseconds);
+            const dateFormat = dateObj.toLocaleString();
+            return (
+              <li key={story.id}>
+                <Post
+                  title={story.title}
+                  url={story.url}
+                  username={story.by}
+                  date={dateFormat}
+                  comment={story.descendants}
+                />
+              </li>
+            );
+          })}
+      </ul>
+    );
   }
 }
