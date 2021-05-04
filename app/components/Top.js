@@ -5,9 +5,9 @@ import Post from './Post';
 export default class Top extends React.Component {
   state = { response: null };
   componentDidMount() {
-    this.update();
+    this.handleUpdate();
   }
-  update = () => {
+  handleUpdate = () => {
     fetchStoryIds('top').then((data) =>
       this.setState(({ response }) => ({ response: data }))
     );

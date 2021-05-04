@@ -6,9 +6,9 @@ import Post from './Post';
 export default class New extends React.Component {
   state = { response: null };
   componentDidMount() {
-    this.update();
+    this.handleUpdate();
   }
-  update = () => {
+  handleUpdate = () => {
     fetchStoryIds('new').then((data) =>
       this.setState(({ response }) => ({ response: data }))
     );
