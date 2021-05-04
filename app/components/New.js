@@ -1,6 +1,8 @@
 import React from 'react';
 import { fetchStoryIds } from '../utils/api';
 import Loading from './Loading';
+import Post from './Post';
+
 export default class New extends React.Component {
   state = { response: null };
   componentDidMount() {
@@ -25,12 +27,13 @@ export default class New extends React.Component {
             const dateFormat = dateObj.toLocaleString();
             return (
               <li key={story.id}>
-                <p>
-                  <a href={story.url}>{story.title}</a>
-                </p>
-                <p>
-                  {`by ${story.by} on ${dateFormat} with ${story.descendants} comments`}
-                </p>
+                <Post
+                  title={story.title}
+                  url={story.url}
+                  username={story.by}
+                  date={dateFormat}
+                  comment={story.descendants}
+                />
               </li>
             );
           })
