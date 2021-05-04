@@ -19,7 +19,21 @@ export default class Top extends React.Component {
         {response === null ? (
           <Loading />
         ) : (
-          response.map((story) => <li key={story.id}>{story.title}</li>)
+          response.map((story) => {
+            const miliseconds = story.time * 1000;
+            const dateObj = new Date(miliseconds);
+            const dateFormat = dateObj.toLocaleString();
+            return (
+              <li key={story.id}>
+                <p>
+                  <a href={story.url}>{story.title}</a>
+                </p>
+                <p>
+                  {`by ${story.by} on ${dateFormat} with ${story.descendants} comments`}
+                </p>
+              </li>
+            );
+          })
         )}
       </ul>
     );
