@@ -64,10 +64,14 @@ const iterateComments = (array, data) => {
     array.map((id) => fetchItem(id).then((data) => data))
   )
     .then((data) =>
-      data.filter(
-        (item) =>
-          item.type == 'comment' && item.dead !== true && item.deleted !== true
-      )
+      data
+        .filter(Boolean)
+        .filter(
+          (item) =>
+            item.type == 'comment' &&
+            item.dead !== true &&
+            item.deleted !== true
+        )
     )
     .catch((error) => console.log(error));
 
