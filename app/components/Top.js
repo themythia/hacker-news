@@ -32,6 +32,7 @@ export default class Top extends React.Component {
                   username={story.by}
                   date={dateFormat}
                   comment={story.descendants}
+                  postId={story.id}
                 />
               </li>
             );

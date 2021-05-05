@@ -37,8 +37,38 @@ export const fetchUser = (name) => {
     .then((res) => res.json())
     .then((data) => {
       const user = data;
-      const list = listItems(data.submitted.slice(0, 10));
+      const list = listItems(data.submitted.slice(0, 30));
       return [user, list];
     })
     .catch((error) => console.log(error));
+};
+
+export const fetchComments = (id) => {
+  const api = `${url}item/${id}${format}`;
+  return fetch(api)
+    .then((res) => res.json())
+    .then((data) => iterateComments(data.kids, data));
+};
+
+const iterateComments = (array, data) => {
+  console.log('apiData', data);
+  const post = {
+    by: data.by,
+    time: data.time,
+    title: data.title,
+    url: data.url,
+    descendants: data.descendants,
+    id: data.id,
+  };
+  const comments = Promise.all(
+    array.map((id) => fetchItem(id).then((data) => data))
+  ).then((data) =>
+    data.filter(
+      (item) =>
+        item.type == 'comment' && item.dead !== true && item.deleted !== true
+    )
+  );
+  console.log('post', post);
+  console.log('apiArray', [post, comments]);
+  return [post, comments];
 };

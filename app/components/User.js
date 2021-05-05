@@ -47,10 +47,9 @@ export default class User extends React.Component {
           <Loading />
         ) : (
           <div>
-            <p dangerouslySetInnerHTML={{ __html: userData.about }} />
-            <p>{userData.created}</p>
             <p>{userData.id}</p>
-            <p>{userData.karma}</p>
+            <p>{`joined ${userData.created} has ${userData.karma} karma`}</p>
+            <p dangerouslySetInnerHTML={{ __html: userData.about }} />
           </div>
         )}
         {userPosts !== null &&

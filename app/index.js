@@ -6,6 +6,7 @@ import New from './components/New';
 import Top from './components/Top';
 import Nav from './components/Nav';
 import User from './components/User';
+import Comment from './components/Comment';
 class App extends React.Component {
   render() {
     return (
@@ -15,6 +16,7 @@ class App extends React.Component {
           <Route exact path='/' component={Top} />
           <Route exact path='/new' component={New} />
           <Route path='/user' component={User} />
+          <Route path='/post' component={Comment} />
         </Switch>
       </Router>
     );
