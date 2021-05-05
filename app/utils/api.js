@@ -51,7 +51,6 @@ export const fetchComments = (id) => {
 };
 
 const iterateComments = (array, data) => {
-  console.log('apiData', data);
   const post = {
     by: data.by,
     time: data.time,

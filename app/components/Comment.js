@@ -34,8 +34,8 @@ export default class Comment extends React.Component {
     console.log('state', this.state);
     const { comments, post } = this.state;
     return (
-      <div>
-        {this.state.comments === null && <Loading />}
+      <div class='comments-div'>
+        {this.state.comments === null && <Loading text='Fetching Comments' />}
         {this.state.comments !== null && (
           <Post
             title={post.title}
@@ -50,15 +50,13 @@ export default class Comment extends React.Component {
           {this.state.comments !== null &&
             comments.map((comment) => {
               return (
-                <li key={comment.id}>
-                  <p>
+                <li key={comment.id} className='comment'>
+                  <p className='faded'>
                     {`by `}
                     <span>
                       <Link
-                        to={{
-                          pathname: '/user',
-                          search: `?id=${comment.by}`,
-                        }}
+                        className='link'
+                        to={{ pathname: '/user', search: `?id=${comment.by}` }}
                       >
                         {comment.by}
                       </Link>

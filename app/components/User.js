@@ -38,38 +38,47 @@ export default class User extends React.Component {
       );
   };
 
+  getDate = (num) => {
+    const dateObj = new Date(num * 1000);
+    return dateObj.toLocaleString();
+  };
+
   render() {
     console.log(this.state);
     const { userData, userPosts } = this.state;
     return (
-      <ul>
+      <React.Fragment>
         {userData === null && userPosts === null ? (
-          <Loading />
+          <Loading text='Fetching User Data' />
         ) : (
           <div>
-            <p>{userData.id}</p>
-            <p>{`joined ${userData.created} has ${userData.karma} karma`}</p>
+            <h1>{userData.id}</h1>
+            <p className='faded'>
+              joined <b>{this.getDate(userData.created)}</b> has{' '}
+              <b>{userData.karma}</b> karma
+            </p>
             <p dangerouslySetInnerHTML={{ __html: userData.about }} />
           </div>
         )}
-        {userPosts !== null &&
-          userPosts.map((story) => {
-            const miliseconds = story.time * 1000;
-            const dateObj = new Date(miliseconds);
-            const dateFormat = dateObj.toLocaleString();
-            return (
-              <li key={story.id}>
-                <Post
-                  title={story.title}
-                  url={story.url}
-                  username={story.by}
-                  date={dateFormat}
-                  comment={story.descendants}
-                />
-              </li>
-            );
-          })}
-      </ul>
+        <h2>Posts</h2>
+        <ul>
+          {userPosts !== null &&
+            userPosts.map((story) => {
+              return (
+                <li key={story.id}>
+                  <Post
+                    title={story.title}
+                    url={story.url}
+                    username={story.by}
+                    date={this.getDate(story.time)}
+                    comment={story.descendants}
+                    postId={story.id}
+                  />
+                </li>
+              );
+            })}
+        </ul>
+      </React.Fragment>
     );
   }
 }

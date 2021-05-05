@@ -13,32 +13,33 @@ export default class New extends React.Component {
       this.setState(({ response }) => ({ response: data }))
     );
   };
-
+  getDate = (num) => {
+    const dateObj = new Date(num * 1000);
+    return dateObj.toLocaleString();
+  };
   render() {
     const { response } = this.state;
     return (
-      <ul>
-        {response === null ? (
-          <Loading />
-        ) : (
-          response.map((story) => {
-            const miliseconds = story.time * 1000;
-            const dateObj = new Date(miliseconds);
-            const dateFormat = dateObj.toLocaleString();
-            return (
-              <li key={story.id}>
-                <Post
-                  title={story.title}
-                  url={story.url}
-                  username={story.by}
-                  date={dateFormat}
-                  comment={story.descendants}
-                />
-              </li>
-            );
-          })
-        )}
-      </ul>
+      <React.Fragment>
+        {response === null && <Loading text='Fetching Stories' />}
+        <ul>
+          {response !== null &&
+            response.map((story) => {
+              return (
+                <li key={story.id}>
+                  <Post
+                    title={story.title}
+                    url={story.url}
+                    username={story.by}
+                    date={this.getDate(story.time)}
+                    comment={story.descendants}
+                    postId={story.id}
+                  />
+                </li>
+              );
+            })}
+        </ul>
+      </React.Fragment>
     );
   }
 }
