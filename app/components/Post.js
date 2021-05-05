@@ -14,7 +14,7 @@ const Post = ({ title, url, username, userId, postId, date, comment }) => {
             {`by `}
             <Link
               to={{ pathname: '/user', search: `?id=${username}` }}
-              className={`link ${theme}`}
+              className={`link link-${theme}`}
             >
               {username}
             </Link>
@@ -24,7 +24,7 @@ const Post = ({ title, url, username, userId, postId, date, comment }) => {
                 pathname: '/post',
                 search: `?id=${postId}`,
               }}
-              className={`link ${theme}`}
+              className={`link link-${theme}`}
             >
               {comment}
             </Link>

@@ -95,6 +95,10 @@ button {
   color: black;
 }
 
+.link-dark {
+  color: #cbcbcb;
+}
+
 .comments-div .post-title {
   font-size: 32px;
 }
@@ -104,6 +108,10 @@ button {
   border-radius: 3px;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+.comment-text-dark a {
+  color: #cbcbcb;
 }
 
 .dark {

@@ -4,6 +4,7 @@ import { fetchComments } from '../utils/api';
 import Loading from './Loading';
 import Post from './Post';
 import { Link } from 'react-router-dom';
+import { ThemeConsumer, ThemeProvider } from '../contexts/Theme';
 
 export default class Comment extends React.Component {
   state = {
@@ -45,28 +46,38 @@ export default class Comment extends React.Component {
             postId={post.id}
           />
         )}
-        <ul>
-          {this.state.comments !== null &&
-            comments.map((comment) => {
-              return (
-                <li key={comment.id} className='comment'>
-                  <p className='faded'>
-                    {`by `}
-                    <span>
-                      <Link
-                        className='link'
-                        to={{ pathname: '/user', search: `?id=${comment.by}` }}
-                      >
-                        {comment.by}
-                      </Link>
-                    </span>
-                    {` on ${this.getDate(comment.time)}`}
-                  </p>
-                  <p dangerouslySetInnerHTML={{ __html: comment.text }}></p>
-                </li>
-              );
-            })}
-        </ul>
+        <ThemeConsumer>
+          {({ theme }) => (
+            <ul>
+              {this.state.comments !== null &&
+                comments.map((comment) => {
+                  return (
+                    <li key={comment.id} className='comment'>
+                      <p className='faded'>
+                        {`by `}
+                        <span>
+                          <Link
+                            className={`link link-${theme}`}
+                            to={{
+                              pathname: '/user',
+                              search: `?id=${comment.by}`,
+                            }}
+                          >
+                            {comment.by}
+                          </Link>
+                        </span>
+                        {` on ${this.getDate(comment.time)}`}
+                      </p>
+                      <p
+                        dangerouslySetInnerHTML={{ __html: comment.text }}
+                        className={`comment-text-${theme}`}
+                      ></p>
+                    </li>
+                  );
+                })}
+            </ul>
+          )}
+        </ThemeConsumer>
       </div>
     );
   }
