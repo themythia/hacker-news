@@ -2,6 +2,7 @@ import React from 'react';
 import { fetchStoryIds } from '../utils/api';
 import Loading from './Loading';
 import Post from './Post';
+import { ThemeConsumer } from '../contexts/Theme';
 export default class Top extends React.Component {
   state = { response: null };
   componentDidMount() {

@@ -31,10 +31,9 @@ export default class Comment extends React.Component {
     return dateObj.toLocaleString();
   };
   render() {
-    console.log('state', this.state);
     const { comments, post } = this.state;
     return (
-      <div class='comments-div'>
+      <div className='comments-div'>
         {this.state.comments === null && <Loading text='Fetching Comments' />}
         {this.state.comments !== null && (
           <Post

@@ -1,33 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ThemeConsumer } from '../contexts/Theme';
 
 const Post = ({ title, url, username, userId, postId, date, comment }) => {
   return (
-    <React.Fragment>
-      <a href={url} className='post-title'>
-        <b>{title}</b>
-      </a>
-      <p className='faded'>
-        {`by `}
-        <Link
-          to={{ pathname: '/user', search: `?id=${username}` }}
-          className='link'
-        >
-          {username}
-        </Link>
-        {` on ${date} with `}
-        <Link
-          to={{
-            pathname: '/post',
-            search: `?id=${postId}`,
-          }}
-          className='link'
-        >
-          {comment}
-        </Link>
-        {` comments`}
-      </p>
-    </React.Fragment>
+    <ThemeConsumer>
+      {({ theme }) => (
+        <div className='post'>
+          <a href={url} className={`post-title ${theme}`}>
+            <b>{title}</b>
+          </a>
+          <p className='faded'>
+            {`by `}
+            <Link
+              to={{ pathname: '/user', search: `?id=${username}` }}
+              className={`link ${theme}`}
+            >
+              {username}
+            </Link>
+            {` on ${date} with `}
+            <Link
+              to={{
+                pathname: '/post',
+                search: `?id=${postId}`,
+              }}
+              className={`link ${theme}`}
+            >
+              {comment}
+            </Link>
+            {` comments`}
+          </p>
+        </div>
+      )}
+    </ThemeConsumer>
   );
 };
 

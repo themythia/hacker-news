@@ -21,14 +21,14 @@ const fetchItem = (id) => {
 export const listItems = (array) => {
   //using promise.all for parallel fetch
   //filtering only stories, not dead or deleted
-  return Promise.all(
-    array.map((id) => fetchItem(id).then((data) => data))
-  ).then((data) =>
-    data.filter(
-      (item) =>
-        item.type == 'story' && item.dead !== true && item.deleted !== true
+  return Promise.all(array.map((id) => fetchItem(id).then((data) => data)))
+    .then((data) =>
+      data.filter(
+        (item) =>
+          item.type == 'story' && item.dead !== true && item.deleted !== true
+      )
     )
-  );
+    .catch((error) => console.log(error));
 };
 
 export const fetchUser = (name) => {
@@ -47,7 +47,8 @@ export const fetchComments = (id) => {
   const api = `${url}item/${id}${format}`;
   return fetch(api)
     .then((res) => res.json())
-    .then((data) => iterateComments(data.kids, data));
+    .then((data) => iterateComments(data.kids, data))
+    .catch((error) => console.log(error));
 };
 
 const iterateComments = (array, data) => {
@@ -61,13 +62,14 @@ const iterateComments = (array, data) => {
   };
   const comments = Promise.all(
     array.map((id) => fetchItem(id).then((data) => data))
-  ).then((data) =>
-    data.filter(
-      (item) =>
-        item.type == 'comment' && item.dead !== true && item.deleted !== true
+  )
+    .then((data) =>
+      data.filter(
+        (item) =>
+          item.type == 'comment' && item.dead !== true && item.deleted !== true
+      )
     )
-  );
-  console.log('post', post);
-  console.log('apiArray', [post, comments]);
+    .catch((error) => console.log(error));
+
   return [post, comments];
 };
