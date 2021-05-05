@@ -52,6 +52,7 @@ export const fetchComments = (id) => {
 };
 
 const iterateComments = (array, data) => {
+  let comments;
   const post = {
     by: data.by,
     time: data.time,
@@ -60,20 +61,24 @@ const iterateComments = (array, data) => {
     descendants: data.descendants,
     id: data.id,
   };
-  const comments = Promise.all(
-    array.map((id) => fetchItem(id).then((data) => data))
-  )
-    .then((data) =>
-      data
-        .filter(Boolean)
-        .filter(
-          (item) =>
-            item.type == 'comment' &&
-            item.dead !== true &&
-            item.deleted !== true
-        )
+  if (post.descendants !== 0) {
+    comments = Promise.all(
+      array.map((id) => fetchItem(id).then((data) => data))
     )
-    .catch((error) => console.log(error));
+      .then((data) =>
+        data
+          .filter(Boolean)
+          .filter(
+            (item) =>
+              item.type == 'comment' &&
+              item.dead !== true &&
+              item.deleted !== true
+          )
+      )
+      .catch((error) => console.log(error));
+  } else {
+    comments = [];
+  }
 
   return [post, comments];
 };
