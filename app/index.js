@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading';
-import Top from './components/Top';
 import Nav from './components/Nav';
-import User from './components/User';
-import Comment from './components/Comment';
 import { ThemeProvider } from './contexts/Theme';
+
+const Top = React.lazy(() => import('./components/Top'));
+const User = React.lazy(() => import('./components/User'));
+const Comment = React.lazy(() => import('./components/Comment'));
 
 const App = () => {
   const [theme, setTheme] = React.useState('light');

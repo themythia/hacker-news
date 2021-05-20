@@ -22,7 +22,7 @@ const Comment = ({ location }) => {
       })
       .then((commentData) => setComments(commentData))
       .catch((error) => console.warn(error));
-  });
+  }, [id]);
 
   const getDate = (num) => {
     const dateObj = new Date(num * 1000);

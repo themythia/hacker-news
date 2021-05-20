@@ -27,7 +27,7 @@ const User = ({ location }) => {
       })
       .then((posts) => setUserPosts(posts))
       .catch((error) => console.warn(error));
-  });
+  }, [id]);
 
   const getDate = (num) => {
     const dateObj = new Date(num * 1000);
