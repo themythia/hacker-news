@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Loading = ({ text }) => {
+const Loading = ({ text = 'Loading' }) => {
   const [content, setContent] = React.useState(text);
   React.useEffect(() => {
     const id = window.setInterval(() => {

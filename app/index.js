@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import New from './components/New';
+import Loading from './components/Loading';
 import Top from './components/Top';
 import Nav from './components/Nav';
 import User from './components/User';
@@ -20,12 +20,14 @@ const App = () => {
         <div className={theme}>
           <div className='container'>
             <Nav toggleTheme={toggleTheme} />
-            <Switch>
-              <Route exact path='/' component={Top} />
-              <Route exact path='/new' component={New} />
-              <Route path='/user' component={User} />
-              <Route path='/post' component={Comment} />
-            </Switch>
+            <React.Suspense fallback={<Loading />}>
+              <Switch>
+                <Route exact path='/' render={() => <Top type='top' />} />
+                <Route exact path='/new' render={() => <Top type='new' />} />
+                <Route path='/user' component={User} />
+                <Route path='/post' component={Comment} />
+              </Switch>
+            </React.Suspense>
           </div>
         </div>
       </ThemeProvider>
