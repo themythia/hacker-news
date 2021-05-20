@@ -1,20 +1,16 @@
 import React from 'react';
 
-export default class Loading extends React.Component {
-  state = {
-    content: this.props.text,
-  };
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.state.content === `${this.props.text}...`
-        ? this.setState({ content: this.props.text })
-        : this.setState((state) => ({ content: state.content + '.' }));
+const Loading = ({ text }) => {
+  const [content, setContent] = React.useState(text);
+  React.useEffect(() => {
+    const id = window.setInterval(() => {
+      setContent((content) => {
+        return content === `${text}...` ? text : `${content}.`;
+      });
     }, 300);
-  }
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-  render() {
-    return <p className='loading'>{this.state.content}</p>;
-  }
-}
+    return () => window.clearInterval(id);
+  }, [text]);
+
+  return <p className='loading'>{content}</p>;
+};
+export default Loading;
